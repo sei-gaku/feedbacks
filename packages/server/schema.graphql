@@ -19,11 +19,11 @@ input EmployeeInput {
 
 type Mutation {
   createEmployee(employee: EmployeeInput!): Employee!
-  updateEmployee(employee: EmployeeInput!, id: String!): Employee!
-  deleteEmployee(id: String!): Boolean!
+  updateEmployee(employee: EmployeeInput!, id: Float!): Employee!
+  deleteEmployee(id: Float!): Boolean!
 }
 
 type Query {
   employees: [Employee!]!
-  employee(id: String!): Employee
+  employee(id: Float!): Employee
 }
