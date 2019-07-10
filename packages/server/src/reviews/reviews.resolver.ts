@@ -1,5 +1,6 @@
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
 
+import { Auth } from "../auth/auth.decorator";
 import { ReviewInput } from "./dto/review.input";
 import { ReviewModel } from "./review.model";
 import { ReviewsService } from "./reviews.service";
@@ -18,6 +19,7 @@ export class ReviewsResolver {
     return this.reviewsService.findById(id);
   }
 
+  @Auth("admin")
   @Mutation(_ => Boolean)
   public async createReview(
     @Args("review") review: ReviewInput,
@@ -25,6 +27,7 @@ export class ReviewsResolver {
     return this.reviewsService.create(review);
   }
 
+  @Auth("admin")
   @Mutation(_ => Boolean)
   public async updateReview(
     @Args("id") id: number,

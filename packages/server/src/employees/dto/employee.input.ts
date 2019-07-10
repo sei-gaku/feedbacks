@@ -29,4 +29,12 @@ export class EmployeeInput {
   @IsOptional()
   @Length(0, 255)
   public bio?: string;
+
+  @Field()
+  @IsNotEmpty()
+  @Length(0, 64)
+  public password!: string;
+
+  @Field()
+  public isAdmin!: boolean;
 }

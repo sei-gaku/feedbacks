@@ -45,6 +45,11 @@ export class EmployeeEntity {
   @Column({ default: false })
   public isAdmin!: boolean;
 
+  @Column()
+  @IsNotEmpty()
+  @Length(0, 64)
+  public password!: string;
+
   @JoinTable()
   @OneToMany(_ => ReviewEntity, review => review.writer)
   public writtenReviews!: ReviewEntity[];

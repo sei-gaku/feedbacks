@@ -12,7 +12,7 @@ export class ReviewsService {
     @InjectRepository(ReviewEntity)
     private readonly reviewRepository: Repository<ReviewEntity>,
     @InjectRepository(EmployeeEntity)
-    private readonly employeeRepository: Repository<ReviewEntity>,
+    private readonly employeeRepository: Repository<EmployeeEntity>,
   ) {}
 
   public async findAll(): Promise<ReviewEntity[]> {

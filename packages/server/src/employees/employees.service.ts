@@ -31,7 +31,10 @@ export class EmployeesService {
       bio: employee.bio,
       email: employee.email,
       firstName: employee.firstName,
+      isAdmin: employee.isAdmin,
       lastName: employee.lastName,
+      // TODO: Encrypt the password
+      password: employee.password,
     });
 
     return true;
@@ -49,7 +52,10 @@ export class EmployeesService {
       email: employee.email,
       firstName: employee.firstName,
       id,
+      isAdmin: employee.isAdmin,
       lastName: employee.lastName,
+      // TODO: Encrypt the password
+      password: employee.password,
     });
 
     return true;
