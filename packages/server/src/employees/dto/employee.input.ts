@@ -25,6 +25,7 @@ export class EmployeeInput {
   @MaxLength(255)
   public email!: string;
 
+  @Field({ nullable: true })
   @IsOptional()
   @Length(0, 255)
   public bio?: string;

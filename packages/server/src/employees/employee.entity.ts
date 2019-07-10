@@ -5,38 +5,55 @@ import {
   Length,
   MaxLength,
 } from "class-validator";
-import { Field, ID, ObjectType } from "type-graphql";
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from "typeorm";
+
+import { ReviewEntity } from "../reviews/review.entity";
 
 @Entity()
-@ObjectType()
-export class Employee {
-  @Field(_ => ID)
+export class EmployeeEntity {
   @PrimaryGeneratedColumn()
   public id!: number;
 
+  @Column()
   @IsNotEmpty()
   @MaxLength(64)
-  @Field()
-  @Column()
   public firstName!: string;
 
+  @Column()
   @IsNotEmpty()
   @MaxLength(64)
-  @Field()
-  @Column()
   public lastName!: string;
 
+  @Column({ unique: true })
   @IsEmail()
   @IsNotEmpty()
   @MaxLength(255)
-  @Field()
-  @Column({ unique: true })
   public email!: string;
 
+  @Column({ nullable: true, type: "text" })
   @IsOptional()
   @Length(0, 255)
-  @Field({ nullable: true })
-  @Column({ nullable: true, type: "text" })
   public bio?: string;
+
+  @Column({ default: false })
+  public isAdmin!: boolean;
+
+  @JoinTable()
+  @OneToMany(_ => ReviewEntity, review => review.writer)
+  public writtenReviews!: ReviewEntity[];
+
+  @JoinTable()
+  @OneToMany(_ => ReviewEntity, review => review.target)
+  public targetedReviews!: ReviewEntity[];
+
+  @JoinTable()
+  @ManyToMany(_ => ReviewEntity)
+  public assignedReviews!: ReviewEntity[];
 }
