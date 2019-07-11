@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 
+import { BCryptService } from "../bcrypt/bcrypt.service";
 import { EmployeeInput } from "./dto/employee.input";
 import { EmployeeEntity } from "./employee.entity";
 
@@ -10,6 +11,7 @@ export class EmployeesService {
   constructor(
     @InjectRepository(EmployeeEntity)
     private readonly employeeRepository: Repository<EmployeeEntity>,
+    private readonly bcryptService: BCryptService,
   ) {}
 
   public async findAll(): Promise<EmployeeEntity[]> {
@@ -33,8 +35,7 @@ export class EmployeesService {
       firstName: employee.firstName,
       isAdmin: employee.isAdmin,
       lastName: employee.lastName,
-      // TODO: Encrypt the password
-      password: employee.password,
+      password: await this.bcryptService.encrypt(employee.password),
     });
 
     return true;
@@ -54,8 +55,7 @@ export class EmployeesService {
       id,
       isAdmin: employee.isAdmin,
       lastName: employee.lastName,
-      // TODO: Encrypt the password
-      password: employee.password,
+      password: await this.bcryptService.encrypt(employee.password),
     });
 
     return true;
