@@ -1,20 +1,14 @@
-import {
-  Inject,
-  Injectable,
-  NotFoundException,
-  Request,
-  Scope,
-} from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 
+import { CurrentUser } from "../auth/current-user.interface";
 import { EmployeeEntity } from "../employees/employee.entity";
-import { CurrentUser } from "./current-user.interface";
 import { GenerateTokenInput } from "./dto/generate-token.input";
 import { TokenModel } from "./tokens.model";
 
-@Injectable({ scope: Scope.REQUEST })
+@Injectable()
 export class TokensService {
   constructor(
     @InjectRepository(EmployeeEntity)
@@ -36,6 +30,7 @@ export class TokensService {
 
     const userSubSet: CurrentUser = {
       email: user.email,
+      id: user.id,
       isAdmin: user.isAdmin,
     };
 

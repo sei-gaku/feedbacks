@@ -2,7 +2,8 @@ import { CanActivate, ExecutionContext, Injectable } from "@nestjs/common";
 import { Reflector } from "@nestjs/core";
 import { GqlExecutionContext } from "@nestjs/graphql";
 import { JwtService } from "@nestjs/jwt";
-import { CurrentUser } from "src/tokens/current-user.interface";
+
+import { CurrentUser } from "./current-user.interface";
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -22,6 +23,7 @@ export class AuthGuard implements CanActivate {
       return true;
     }
 
+    // TODO: Use the AuthService to get the current user
     const authorization = req && req.headers && req.headers.authorization;
 
     if (!authorization) {

@@ -26,12 +26,11 @@ import { TokensModule } from "./tokens/tokens.modules";
     }),
     GraphQLModule.forRoot({
       autoSchemaFile: "schema.graphql",
-      // This will add the request object to the GrpahQL Context
+      // This will add the request object to the GraphQL context
       context: ({ req }) => ({ req }),
       installSubscriptionHandlers: true,
       playground: true,
     }),
-
     AuthModule,
     ReviewsModule,
     EmployeesModule,

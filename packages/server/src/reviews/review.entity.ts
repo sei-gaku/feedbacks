@@ -21,6 +21,7 @@ export class ReviewEntity {
   @ManyToOne(_ => EmployeeEntity, employee => employee.targetedReviews)
   public target!: EmployeeEntity;
 
+  // TODO: Link this column to the feedbacks table
   @JoinTable()
   @ManyToMany(_ => EmployeeEntity, employee => employee.assignedReviews)
   public assignees!: EmployeeEntity[];
