@@ -2,13 +2,13 @@ import { useMutation } from "graphql-hooks";
 import { loader } from "graphql.macro";
 import React from "react";
 
-import { LoginMutation } from "./generated/graphql";
+import { LoginMutation } from "../generated/graphql";
 
-import "./App.css";
+import "./Home.css";
 
 const mutation = loader("./Login.graphql").loc!.source.body;
 
-const App: React.FC = () => {
+const Home: React.FC = () => {
   const [login, response] = useMutation<LoginMutation>(mutation);
 
   React.useEffect(() => {
@@ -16,8 +16,8 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <div className="App">
-      <header className="App-header">
+    <div className="home">
+      <header className="home-header">
         {response.loading || !response.data ? (
           <div>Loading...</div>
         ) : (
@@ -28,4 +28,4 @@ const App: React.FC = () => {
   );
 };
 
-export default App;
+export default Home;

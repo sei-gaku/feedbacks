@@ -1,8 +1,11 @@
 import { ClientContext, GraphQLClient } from "graphql-hooks";
+import { mount, route } from "navi";
 import React from "react";
 import ReactDOM from "react-dom";
+import { Router } from "react-navi";
 
-import App from "./App";
+import Employees from "./pages/Employees";
+import Home from "./pages/Home";
 
 import "./index.css";
 
@@ -10,9 +13,20 @@ const client = new GraphQLClient({
   url: "http://localhost:8080/graphql",
 });
 
+const routes = mount({
+  "/": route({
+    title: "Feedbacks - Home",
+    view: <Home />,
+  }),
+  "/employees": route({
+    title: "Feedbacks - Employees",
+    view: <Employees />,
+  }),
+});
+
 ReactDOM.render(
   <ClientContext.Provider value={client}>
-    <App />
+    <Router routes={routes} />
   </ClientContext.Provider>,
   document.getElementById("root"),
 );
