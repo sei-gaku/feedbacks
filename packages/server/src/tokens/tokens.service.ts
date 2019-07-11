@@ -44,8 +44,8 @@ export class TokensService {
       isAdmin: user.isAdmin,
     };
 
-    const content = this.jwtService.sign(userSubSet);
+    const token = this.jwtService.sign(userSubSet);
 
-    return { content, ...userSubSet };
+    return { token, ...userSubSet };
   }
 }

@@ -5,7 +5,7 @@ import { Field, ObjectType } from "type-graphql";
 export class TokenModel {
   @Field()
   @IsNotEmpty()
-  public content!: string;
+  public token!: string;
 
   @Field()
   @IsEmail()

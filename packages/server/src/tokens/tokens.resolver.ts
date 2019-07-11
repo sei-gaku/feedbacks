@@ -8,7 +8,7 @@ import { TokensService } from "./tokens.service";
 export class TokensResolver {
   constructor(private readonly tokensService: TokensService) {}
 
-  @Mutation(_ => TokenModel)
+  @Mutation(_ => TokenModel, { name: "login" })
   public async generateToken(
     @Args("credentials") credentials: GenerateTokenInput,
   ): Promise<TokenModel> {
