@@ -7,6 +7,7 @@ import { Router } from "react-navi";
 import Employees from "./pages/Employees";
 import Home from "./pages/Home";
 
+import "antd/dist/antd.css";
 import "./index.css";
 
 const client = new GraphQLClient({

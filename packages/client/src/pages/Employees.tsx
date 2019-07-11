@@ -1,3 +1,4 @@
+import { Button } from "antd";
 import React from "react";
 import { useCurrentRoute } from "react-navi";
 
@@ -9,7 +10,7 @@ const Employees: React.FC = () => {
   return (
     <div className="employees">
       <header className="employees-header">
-        Employees on {route.url.pathname}
+        <Button type="primary">Employees on {route.url.pathname}</Button>
       </header>
     </div>
   );
