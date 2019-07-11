@@ -7,6 +7,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 
 import { AuthService } from "../auth/auth.service";
+import { CurrentUser } from "../auth/current-user.interface";
 import { EmployeeEntity } from "../employees/employee.entity";
 import { ReviewInput } from "./dto/review.input";
 import { ReviewEntity } from "./review.entity";
@@ -21,9 +22,47 @@ export class ReviewsService {
     private readonly authService: AuthService,
   ) {}
 
-  public async findAll(): Promise<ReviewEntity[]> {
+  public async findAllWrittenByCurrentUser(): Promise<ReviewEntity[]> {
+    const currentUser = await this.currentUser();
+
     return this.reviewRepository.find({
       relations: ["target", "writer", "assignees"],
+      where: { writer: currentUser.id },
+    });
+  }
+
+  public async findAllAboutCurrentUser(): Promise<ReviewEntity[]> {
+    const currentUser = await this.currentUser();
+
+    return this.reviewRepository.find({
+      relations: ["target", "writer", "assignees"],
+      where: { target: currentUser.id },
+    });
+  }
+
+  public async findAllWrittenBy(id: number): Promise<ReviewEntity[]> {
+    const currentUser = await this.currentUser();
+
+    if (!currentUser.isAdmin) {
+      throw new UnauthorizedException();
+    }
+
+    return this.reviewRepository.find({
+      relations: ["target", "writer", "assignees"],
+      where: { writer: id },
+    });
+  }
+
+  public async findAllAbout(id: number): Promise<ReviewEntity[]> {
+    const currentUser = await this.currentUser();
+
+    if (!currentUser.isAdmin) {
+      throw new UnauthorizedException();
+    }
+
+    return this.reviewRepository.find({
+      relations: ["target", "writer", "assignees"],
+      where: { writer: id },
     });
   }
 
@@ -76,5 +115,15 @@ export class ReviewsService {
     });
 
     return true;
+  }
+
+  private async currentUser(): Promise<CurrentUser> {
+    const currentUser = await this.authService.geCurrentUser();
+
+    if (!currentUser) {
+      throw new UnauthorizedException();
+    }
+
+    return currentUser;
   }
 }

@@ -2,8 +2,9 @@ import { Module } from "@nestjs/common";
 import { APP_GUARD } from "@nestjs/core";
 import { GraphQLModule } from "@nestjs/graphql";
 import { JwtModule } from "@nestjs/jwt";
-import { TypeOrmModule } from "@nestjs/typeorm";
+import { InjectRepository, TypeOrmModule } from "@nestjs/typeorm";
 import * as path from "path";
+import { Repository } from "typeorm";
 
 import { AuthGuard } from "./auth/auth.guard";
 import { AuthModule } from "./auth/auth.module";
@@ -43,4 +44,24 @@ import { TokensModule } from "./tokens/tokens.modules";
     },
   ],
 })
-export class AppModule {}
+export class AppModule {
+  constructor(
+    @InjectRepository(EmployeeEntity)
+    private readonly employeeRepository: Repository<EmployeeEntity>,
+  ) {
+    // TODO: Extremely hacky way to set up the initial admin, should be in a seed!
+    const adminEmail = "admin@admin.com";
+    this.employeeRepository.findOne({ email: adminEmail }).then(admin => {
+      if (!admin) {
+        this.employeeRepository.save({
+          bio: "An admin",
+          email: adminEmail,
+          firstName: "admin",
+          isAdmin: true,
+          lastName: "admin",
+          password: "admin",
+        });
+      }
+    });
+  }
+}

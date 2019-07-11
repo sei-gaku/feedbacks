@@ -7,6 +7,7 @@ import {
 } from "class-validator";
 import {
   Column,
+  CreateDateColumn,
   Entity,
   JoinTable,
   ManyToMany,
@@ -61,4 +62,7 @@ export class EmployeeEntity {
   @JoinTable()
   @ManyToMany(_ => ReviewEntity)
   public assignedReviews!: ReviewEntity[];
+
+  @CreateDateColumn()
+  public createdAt!: string;
 }

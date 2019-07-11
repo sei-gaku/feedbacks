@@ -1,6 +1,7 @@
 import { IsNotEmpty, MaxLength } from "class-validator";
 import {
   Column,
+  CreateDateColumn,
   Entity,
   JoinTable,
   ManyToMany,
@@ -30,4 +31,7 @@ export class ReviewEntity {
   @MaxLength(255)
   @Column()
   public content!: string;
+
+  @CreateDateColumn()
+  public createdAt!: string;
 }
