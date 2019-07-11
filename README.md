@@ -70,3 +70,7 @@ Here is the stack:
   A proper sign up/sign in system with emails, etc... will be needed soon.
 - JWT is fine and allows some simple stateless (on the server side) "session" management, but it's a bit unsafe
 - Implement custom UI components
+- Proper DevOps
+- Prepare for deployment: migrations for the bd, production build, etc...
+- It could be very nice to generate some directives in the GraphQL schema for both roles and validations
+  , something like `@validate(maxLength: 64)) firstName` (but it's a whole project on its own)
