@@ -25,7 +25,16 @@ export class EmployeeInput {
   @MaxLength(255)
   public email!: string;
 
+  @Field({ nullable: true })
   @IsOptional()
   @Length(0, 255)
   public bio?: string;
+
+  @Field()
+  @IsNotEmpty()
+  @Length(0, 64)
+  public password!: string;
+
+  @Field()
+  public isAdmin!: boolean;
 }

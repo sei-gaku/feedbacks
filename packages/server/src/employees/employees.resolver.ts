@@ -1,40 +1,48 @@
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
 
+import { Role } from "../auth/role.decorator";
 import { EmployeeInput } from "./dto/employee.input";
+import { EmployeeModel } from "./employee.model";
 import { EmployeesService } from "./employees.service";
-import { Employee } from "./models/employee";
 
-@Resolver((_: unknown) => Employee)
+@Resolver(EmployeeModel)
 export class EmployeesResolver {
   constructor(private readonly employeesService: EmployeesService) {}
 
-  @Query(_ => [Employee], { name: "employees" })
-  public async getEmployees(): Promise<Employee[]> {
-    return await this.employeesService.findAll();
+  @Role("admin")
+  @Query(_ => [EmployeeModel], { name: "employees" })
+  public async getEmployees(): Promise<EmployeeModel[]> {
+    return this.employeesService.findAll();
   }
 
-  @Query(_ => Employee, { nullable: true, name: "employee" })
-  public async getEmployee(@Args("id") id: string): Promise<Employee | null> {
-    return await this.employeesService.findById(id);
+  @Role("admin")
+  @Query(_ => EmployeeModel, { nullable: true, name: "employee" })
+  public async getEmployee(
+    @Args("id") id: number,
+  ): Promise<EmployeeModel | null> {
+    return this.employeesService.findById(id);
   }
 
-  @Mutation(_ => Employee)
+  @Role("admin")
+  @Mutation(_ => Boolean)
   public async createEmployee(
     @Args("employee") employee: EmployeeInput,
-  ): Promise<Employee> {
-    return await this.employeesService.create(employee);
+  ): Promise<boolean> {
+    return this.employeesService.create(employee);
   }
 
-  @Mutation(_ => Employee)
-  public async updateEmployee(
-    @Args("id") id: string,
-    @Args("employee") employee: EmployeeInput,
-  ): Promise<Employee> {
-    return await this.employeesService.update(id, employee);
-  }
-
+  @Role("admin")
   @Mutation(_ => Boolean)
-  public async deleteEmployee(@Args("id") id: string): Promise<boolean> {
-    return await this.employeesService.delete(id);
+  public async updateEmployee(
+    @Args("id") id: number,
+    @Args("employee") employee: EmployeeInput,
+  ): Promise<boolean> {
+    return this.employeesService.update(id, employee);
+  }
+
+  @Role("admin")
+  @Mutation(_ => Boolean)
+  public async deleteEmployee(@Args("id") id: number): Promise<boolean> {
+    return this.employeesService.delete(id);
   }
 }
