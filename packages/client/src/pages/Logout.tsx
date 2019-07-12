@@ -14,6 +14,7 @@ const Logout: React.FC = () => {
     clearStorageValue();
     notify("success", "You are now disconnected");
     navigation.navigate("/login");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return null;
