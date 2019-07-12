@@ -1,0 +1,13 @@
+.root {
+  height: 100%;
+
+  .panel {
+    // Same as Ant, cf: https://ant.design/components/grid/#Col
+    @media all and (max-width: 768px) {
+      margin-top: 40px;
+    }
+
+    margin-top: 140px;
+    width: 80%;
+  }
+}

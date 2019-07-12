@@ -1,11 +1,8 @@
-import { Breadcrumb, Icon, Layout as AntLayout, Menu } from "antd";
+import { Icon, Layout as AntLayout, Menu } from "antd";
 import React from "react";
-import {
-  Link,
-  NotFoundBoundary,
-  useCurrentRoute,
-  useNavigation,
-} from "react-navi";
+import { NotFoundBoundary, useCurrentRoute, useNavigation } from "react-navi";
+
+import Header from "./Header";
 
 import styles from "./Layout.module.scss";
 
@@ -23,11 +20,7 @@ const Layout: React.FC = ({ children }) => {
 
   return (
     <AntLayout className={styles.root}>
-      <AntLayout.Header>
-        <Link href="/">
-          <h1 className={styles.title}>Feedbacks</h1>
-        </Link>
-      </AntLayout.Header>
+      <Header />
       <AntLayout>
         <AntLayout.Sider width={200}>
           <Menu
@@ -81,14 +74,12 @@ const Layout: React.FC = ({ children }) => {
                 </span>
               }
             ></Menu.SubMenu>
+            <Menu.Item key="4" onClick={() => navigation.navigate("/logout")}>
+              Logout
+            </Menu.Item>
           </Menu>
         </AntLayout.Sider>
         <AntLayout className={styles.content}>
-          <Breadcrumb className={styles.breadcrumb}>
-            <Breadcrumb.Item>Home</Breadcrumb.Item>
-            <Breadcrumb.Item>List</Breadcrumb.Item>
-            <Breadcrumb.Item>App</Breadcrumb.Item>
-          </Breadcrumb>
           <AntLayout.Content
             style={{
               background: "#fff",

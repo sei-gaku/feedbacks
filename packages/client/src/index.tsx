@@ -4,9 +4,11 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Router, View } from "react-navi";
 
-import Layout from "./components/Layout";
+import { Provider as LoginProvder } from "./contexts/Login";
 import Employees from "./pages/Employees";
 import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Logout from "./pages/Logout";
 import Reviews from "./pages/Reviews";
 
 import "antd/dist/antd.css";
@@ -24,13 +26,15 @@ const routes = mount({
   }),
   "/login": route({
     title: "Feedbacks - Log in",
-    // FIXME: Use proper page
-    view: <Home />,
+    view: (
+      <LoginProvder>
+        <Login />
+      </LoginProvder>
+    ),
   }),
   "/logout": route({
     title: "Feedbacks - Logging out...",
-    // FIXME: Use proper page
-    view: <Home />,
+    view: <Logout />,
   }),
   "/employees": route({
     title: "Feedbacks - Employees",
@@ -49,9 +53,7 @@ const routes = mount({
 ReactDOM.render(
   <ClientContext.Provider value={client}>
     <Router routes={routes}>
-      <Layout>
-        <View />
-      </Layout>
+      <View />
     </Router>
   </ClientContext.Provider>,
   document.getElementById("root"),
