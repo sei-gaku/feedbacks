@@ -1,0 +1,19 @@
+.root {
+  height: 100%;
+
+  .title {
+    color: white;
+  }
+
+  .menu {
+    height: 100%;
+  }
+
+  .content {
+    padding: 0 24px 24px;
+
+    .breadcrumb {
+      margin: 16px 0;
+    }
+  }
+}

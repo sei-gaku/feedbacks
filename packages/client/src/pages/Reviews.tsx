@@ -2,10 +2,10 @@ import Title from "antd/lib/typography/Title";
 import React from "react";
 import { useCurrentRoute } from "react-navi";
 
-const Employees: React.FC = () => {
+const Reviews: React.FC = () => {
   const route = useCurrentRoute();
 
-  return <Title>Employees on {route.url.pathname}</Title>;
+  return <Title>Reviews on {route.url.pathname}</Title>;
 };
 
-export default Employees;
+export default Reviews;
