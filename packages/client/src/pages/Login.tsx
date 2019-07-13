@@ -14,14 +14,15 @@ import useStateContext from "../hooks/useStateContext";
 import useLocalStorage from "../hooks/useLocalStorage";
 import styles from "./Login.module.scss";
 
-const mutation = loader("./Login.graphql").loc!.source.body;
+const loginMutation = loader("./Login.graphql").loc!.source.body;
 
 const Login: React.FC = () => {
   const { dispatch, state } = useStateContext(LoginContext);
-  const [login, response] = useMutation<LoginMutation>(mutation);
+  const [login, response] = useMutation<LoginMutation>(loginMutation);
   const notify = useNotification();
   const navigation = useNavigation();
-  const { setStorageValue } = useLocalStorage("token");
+  const { setStorageValue: setTokenStorageValue } = useLocalStorage("token");
+  const { setStorageValue: setRoleStorageValue } = useLocalStorage("role");
 
   React.useEffect(() => {
     dispatch({ type: "setLoading", payload: response.loading });
@@ -35,7 +36,8 @@ const Login: React.FC = () => {
     if (response.data && !response.loading) {
       notify("success", "Login success");
       navigation.navigate("/");
-      setStorageValue(response.data.login.token);
+      setTokenStorageValue(response.data.login.token);
+      setRoleStorageValue(response.data.login.isAdmin ? "admin" : "employee");
 
       return;
     }

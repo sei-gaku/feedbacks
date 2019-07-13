@@ -1,17 +1,34 @@
-import { useState } from "react";
+import { useContext, useEffect } from "react";
+
+import StorageContext from "../contexts/Storage";
 
 export default (key: string) => {
-  const [value, setValue] = useState(window.localStorage.getItem(key));
+  const initValue = window.localStorage.getItem(key);
+
+  const { dispatch, state } = useContext(StorageContext);
+
+  useEffect(() => {
+    if (!initValue) {
+      return;
+    }
+
+    dispatch({ payload: { key, value: initValue }, type: "setValue" });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const setStorageValue = (newValue: string) => {
-    setValue(newValue);
+    dispatch({ type: "setValue", payload: { key, value: newValue } });
     window.localStorage.setItem(key, newValue);
   };
 
   const clearStorageValue = () => {
-    setValue(null);
+    dispatch({ type: "clearValue", payload: { key } });
     window.localStorage.clear();
   };
 
-  return { clearStorageValue, setStorageValue, storageValue: value };
+  return {
+    clearStorageValue,
+    setStorageValue,
+    storageValue: initValue || state[key],
+  };
 };

@@ -1,0 +1,19 @@
+mutation CreateEmployee(
+  $email: String!
+  $password: String!
+  $firstName: String!
+  $lastName: String!
+  $bio: String
+  $isAdmin: Boolean!
+) {
+  createEmployee(
+    employee: {
+      email: $email
+      password: $password
+      firstName: $firstName
+      lastName: $lastName
+      bio: $bio
+      isAdmin: $isAdmin
+    }
+  )
+}

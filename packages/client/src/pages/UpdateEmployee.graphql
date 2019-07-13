@@ -1,0 +1,17 @@
+mutation UpdateEmployee(
+  $id: Float!
+  $firstName: String!
+  $lastName: String!
+  $bio: String
+  $isAdmin: Boolean!
+) {
+  updateEmployee(
+    id: $id
+    employee: {
+      firstName: $firstName
+      lastName: $lastName
+      bio: $bio
+      isAdmin: $isAdmin
+    }
+  )
+}

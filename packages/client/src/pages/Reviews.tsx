@@ -1,4 +1,4 @@
-import Title from "antd/lib/typography/Title";
+import { Typography } from "antd";
 import React from "react";
 import { useCurrentRoute } from "react-navi";
 
@@ -9,7 +9,7 @@ const Reviews: React.FC = () => {
 
   return (
     <Layout>
-      <Title>Reviews on {route.url.pathname}</Title>
+      <Typography.Title>Reviews on {route.url.pathname}</Typography.Title>
     </Layout>
   );
 };

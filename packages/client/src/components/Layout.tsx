@@ -25,7 +25,7 @@ const Layout: React.FC = ({ children }) => {
         <AntLayout.Sider width={200}>
           <Menu
             className={styles.menu}
-            mode="inline"
+            mode="vertical"
             defaultSelectedKeys={[
               // TODO: Create a smart module that will map keys to pathname, etc...
               pathname === "/employees"
@@ -36,6 +36,7 @@ const Layout: React.FC = ({ children }) => {
                 ? "3"
                 : "",
             ]}
+            theme="dark"
           >
             <Menu.Item
               key="1"

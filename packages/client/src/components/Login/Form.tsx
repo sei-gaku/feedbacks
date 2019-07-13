@@ -19,8 +19,8 @@ const LoginForm: React.FC<Props> = ({ onSubmit }) => {
         <Input
           onChange={event =>
             dispatch({
-              payload: event.currentTarget.value,
-              type: "setEmailValue",
+              payload: { key: "email", value: event.currentTarget.value },
+              type: "setValue",
             })
           }
           prefix={<Icon type="user" />}
@@ -34,8 +34,8 @@ const LoginForm: React.FC<Props> = ({ onSubmit }) => {
         <Input
           onChange={event =>
             dispatch({
-              payload: event.currentTarget.value,
-              type: "setPasswordValue",
+              payload: { key: "password", value: event.currentTarget.value },
+              type: "setValue",
             })
           }
           prefix={<Icon type="lock" />}
@@ -47,13 +47,13 @@ const LoginForm: React.FC<Props> = ({ onSubmit }) => {
       </Form.Item>
       <Form.Item>
         <Button
-          icon="login"
           loading={state.loading}
           type="primary"
           htmlType="submit"
           size="large"
         >
           Log in
+          <Icon type="login" />
         </Button>
       </Form.Item>
     </Form>

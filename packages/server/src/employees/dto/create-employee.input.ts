@@ -8,7 +8,7 @@ import {
 import { Field, InputType } from "type-graphql";
 
 @InputType()
-export class EmployeeInput {
+export class CreateEmployeeInput {
   @Field()
   @IsNotEmpty()
   @MaxLength(64)

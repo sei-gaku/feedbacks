@@ -4,43 +4,27 @@ import { StateContextValue } from "../hooks/useStateContext";
 import createProvider from "./createProvider";
 
 // For each context we first define the state
-interface State {
-  form: {
-    email: string;
-    password: string;
-  };
-  loading: boolean;
-}
+type State = Record<string, string>;
 
 // And a initial state value
-const initialState: State = {
-  form: { email: "", password: "" },
-  loading: false,
-};
+const initialState: State = {};
 
 // Then the action
 type Action =
-  | { type: "setLoading"; payload: boolean }
-  | {
-      type: "setValue";
-      payload: {
-        key: keyof State["form"];
-        value: State["form"][keyof State["form"]];
-      };
-    };
+  | { type: "setValue"; payload: { key: string; value: string } }
+  | { type: "clearValue"; payload: { key: string } };
 
 // A reducer
 const reducer: Reducer<State, Action> = (state, action) => {
   switch (action.type) {
-    case "setLoading": {
-      return { ...state, loading: action.payload };
+    case "setValue": {
+      return { ...state, [action.payload.key]: action.payload.value };
     }
 
-    case "setValue": {
-      return {
-        ...state,
-        form: { ...state.form, [action.payload.key]: action.payload.value },
-      };
+    case "clearValue": {
+      const { [action.payload.key]: _, ...newState } = state;
+
+      return newState;
     }
 
     default: {
