@@ -25,12 +25,6 @@ export class ReviewsService {
   ) {}
 
   public async findAll(id: number, kind: ReviewKind): Promise<ReviewEntity[]> {
-    const currentUser = await this.currentUser();
-
-    if (!currentUser.isAdmin) {
-      throw new UnauthorizedException();
-    }
-
     switch (kind) {
       case ReviewKind.ABOUT: {
         return this.reviewRepository.find({

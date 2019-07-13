@@ -21,14 +21,14 @@ const client = new GraphQLClient({
 
 // tslint:disable: object-literal-sort-keys
 const routes = mount({
-  "/": map((_, context) => {
+  "/": map((_, context: any) => {
     // TODO: Make this part a bit more type safe
-    switch ((context as any).role) {
+    switch (context.role) {
       case "admin": {
         return redirect("/employees");
       }
 
-      case "employees": {
+      case "employee": {
         return redirect("/reviews/written-by-me");
       }
 
@@ -37,8 +37,8 @@ const routes = mount({
       }
     }
   }),
-  "/login": map((_, context) =>
-    (context as any).token
+  "/login": map((_, context: any) =>
+    context.token
       ? redirect("/")
       : route({
           title: "Feedbacks - Log in",
@@ -53,8 +53,8 @@ const routes = mount({
     title: "Feedbacks - Logging out...",
     view: <Logout />,
   }),
-  "/employees": map((_, context) =>
-    (context as any).role !== "admin"
+  "/employees": map((_, context: any) =>
+    context.role !== "admin"
       ? redirect("/")
       : route({
           title: "Feedbacks - Employees",

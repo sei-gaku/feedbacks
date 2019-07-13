@@ -87,3 +87,4 @@ Here is the stack:
 - Soft delete
 - Consider dropping the reviews related to deleted employees
 - Smarter ErrorBoundary
+- Pagination or Infinite scroll

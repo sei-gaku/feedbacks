@@ -1,9 +1,4 @@
 query Reviews($id: Int!, $kind: ReviewKind!) {
-  employees {
-    id
-    firstName
-    lastName
-  }
   reviews(id: $id, kind: $kind) {
     id
     content

@@ -5,7 +5,12 @@ import React from "react";
 import Layout from "../../components/Layout";
 import ReviewModal from "../../components/Reviews/ReviewModal";
 import ReviewsContext from "../../contexts/Reviews";
-import { CreateReviewMutation, ReviewsQuery } from "../../generated/graphql";
+import {
+  CreateReviewMutation,
+  ReviewsEmployeesQuery,
+  ReviewsQuery,
+} from "../../generated/graphql";
+import useLocalStorage from "../../hooks/useLocalStorage";
 import useManualQueryWithAuth from "../../hooks/useManualQueryWithAuth";
 import useMutationWithAuth from "../../hooks/useMutationWithAuth";
 import useNotification from "../../hooks/useNotification";
@@ -14,6 +19,8 @@ import useStateContext from "../../hooks/useStateContext";
 type Review = ReviewsQuery["reviews"][number];
 
 const fetchReviewsQuery = loader("./Reviews.graphql").loc!.source.body;
+const fetchReviewsEmployeesQuery = loader("./ReviewsEmployees.graphql").loc!
+  .source.body;
 const createReviewMutation = loader("./CreateReview.graphql").loc!.source.body;
 const updateReviewMutation = loader("./UpdateReview.graphql").loc!.source.body;
 
@@ -23,6 +30,10 @@ interface Props {
 }
 
 const Reviews: React.FC<Props> = ({ id, type }) => {
+  const [
+    fetchReviewsEmployees,
+    reviewsEmployeesFetched,
+  ] = useManualQueryWithAuth<ReviewsEmployeesQuery>(fetchReviewsEmployeesQuery);
   const [fetchReviews, reviewsFetched] = useManualQueryWithAuth<ReviewsQuery>(
     fetchReviewsQuery,
     {
@@ -37,29 +48,38 @@ const Reviews: React.FC<Props> = ({ id, type }) => {
   >(updateReviewMutation);
   const notify = useNotification();
   const { dispatch, state } = useStateContext(ReviewsContext);
+  const { storageValue: storageRoleValue } = useLocalStorage("role");
 
-  // Init reviews fetch
+  // Init reviews and employees reviews fetch
   React.useEffect(() => {
     fetchReviews();
+
+    if (storageRoleValue === "admin") {
+      fetchReviewsEmployees();
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, type]);
 
   // Init review fetch error
   React.useEffect(() => {
-    if (reviewsFetched.error) {
+    if (reviewsFetched.error || reviewsEmployeesFetched.error) {
       notify("error", "An error occured");
     }
-  }, [reviewsFetched.error, notify]);
+  }, [reviewsFetched.error, reviewsEmployeesFetched.error, notify]);
 
-  // Init employees fetch success
+  // Init  employees fetch success
   React.useEffect(() => {
-    if (!reviewsFetched.data || reviewsFetched.loading) {
+    if (!reviewsEmployeesFetched.data || reviewsEmployeesFetched.loading) {
       return;
     }
 
-    dispatch({ type: "setEmployees", payload: reviewsFetched.data.employees });
+    dispatch({
+      payload: reviewsEmployeesFetched.data.employees,
+      type: "setEmployees",
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [reviewsFetched.data, reviewsFetched.loading]);
+  }, [reviewsEmployeesFetched.data, reviewsEmployeesFetched.loading]);
 
   // Handle the error and success on review creation
   React.useEffect(() => {
@@ -132,15 +152,17 @@ const Reviews: React.FC<Props> = ({ id, type }) => {
       <Row type="flex" justify="space-between">
         {/* TODO: Display more information in the title */}
         <Typography.Title>Reviews</Typography.Title>
-        <Button
-          onClick={() =>
-            dispatch({ type: "openReviewModal", payload: { mode: "create" } })
-          }
-          type="primary"
-          size="large"
-        >
-          Create Review
-        </Button>
+        {storageRoleValue === "employee" ? null : (
+          <Button
+            onClick={() =>
+              dispatch({ type: "openReviewModal", payload: { mode: "create" } })
+            }
+            type="primary"
+            size="large"
+          >
+            Create Review
+          </Button>
+        )}
       </Row>
       <Table<Review>
         dataSource={
@@ -167,21 +189,27 @@ const Reviews: React.FC<Props> = ({ id, type }) => {
             `${review.target.lastName} ${review.target.firstName}`
           }
         />
-        <Table.Column<Review>
-          dataIndex="id"
-          key="actions"
-          render={(_, review) => (
-            <Icon
-              type="edit"
-              onClick={() => {
-                dispatch({
-                  payload: { reviewId: review.id, mode: "edit", init: review },
-                  type: "openReviewModal",
-                });
-              }}
-            />
-          )}
-        />
+        {storageRoleValue === "employee" ? null : (
+          <Table.Column<Review>
+            dataIndex="id"
+            key="actions"
+            render={(_, review) => (
+              <Icon
+                type="edit"
+                onClick={() => {
+                  dispatch({
+                    payload: {
+                      init: review,
+                      mode: "edit",
+                      reviewId: review.id,
+                    },
+                    type: "openReviewModal",
+                  });
+                }}
+              />
+            )}
+          />
+        )}
       </Table>
     </Layout>
   );

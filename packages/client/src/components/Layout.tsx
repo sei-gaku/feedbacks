@@ -3,6 +3,7 @@ import React from "react";
 import { NotFoundBoundary, useCurrentRoute, useNavigation } from "react-navi";
 
 import Header from "./Header";
+import useLocalStorage from "../hooks/useLocalStorage";
 
 import styles from "./Layout.module.scss";
 
@@ -17,6 +18,7 @@ const Layout: React.FC = ({ children }) => {
   const {
     url: { pathname },
   } = useCurrentRoute();
+  const { storageValue: storageRoleValue } = useLocalStorage("role");
 
   return (
     <AntLayout className={styles.root}>
@@ -38,12 +40,14 @@ const Layout: React.FC = ({ children }) => {
             ]}
             theme="dark"
           >
-            <Menu.Item
-              key="1"
-              onClick={() => navigation.navigate("/employees")}
-            >
-              Employees
-            </Menu.Item>
+            {storageRoleValue === "employee" ? null : (
+              <Menu.Item
+                key="1"
+                onClick={() => navigation.navigate("/employees")}
+              >
+                Employees
+              </Menu.Item>
+            )}
             <Menu.SubMenu
               key="sub1"
               title={

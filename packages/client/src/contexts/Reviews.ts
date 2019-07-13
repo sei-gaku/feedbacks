@@ -1,6 +1,6 @@
 import React, { Reducer } from "react";
 
-import { ReviewsQuery } from "../generated/graphql";
+import { ReviewsEmployeesQuery } from "../generated/graphql";
 import { StateContextValue } from "../hooks/useStateContext";
 import createProvider from "./createProvider";
 
@@ -25,7 +25,7 @@ const initialReviewModalState: ReviewModal = {
 };
 
 interface State {
-  employees: ReviewsQuery["employees"];
+  employees: ReviewsEmployeesQuery["employees"];
   reviewModal: null | ReviewModal;
 }
 
@@ -35,7 +35,7 @@ const initialState: State = {
 };
 
 type Action =
-  | { type: "setEmployees"; payload: ReviewsQuery["employees"] }
+  | { type: "setEmployees"; payload: ReviewsEmployeesQuery["employees"] }
   | {
       type: "openReviewModal";
       payload: {

@@ -20,7 +20,6 @@ export class ReviewsResolver {
     return this.reviewsService.findById(id);
   }
 
-  @Role("admin")
   @Query(_ => [ReviewModel], { name: "reviews" })
   public async getReviews(
     @Args({ name: "id", type: () => Int }) id: number,
