@@ -3,19 +3,19 @@ import { loader } from "graphql.macro";
 import React from "react";
 
 import { Link } from "react-navi";
-import EmployeeModal from "../components/Employees/EmployeeModal";
-import WarningModal from "../components/Employees/WarningModal";
-import Layout from "../components/Layout";
-import EmployeesContext from "../contexts/Employees";
+import EmployeeModal from "../../components/Employees/EmployeeModal";
+import WarningModal from "../../components/Employees/WarningModal";
+import Layout from "../../components/Layout";
+import EmployeesContext from "../../contexts/Employees";
 import {
   CreateEmployeeMutation,
   DeleteEmployeeMutation,
   EmployeesQuery,
-} from "../generated/graphql";
-import useManualQueryWithAuth from "../hooks/useManualQueryWithAuth";
-import useMutationWithAuth from "../hooks/useMutationWithAuth";
-import useNotification from "../hooks/useNotification";
-import useStateContext from "../hooks/useStateContext";
+} from "../../generated/graphql";
+import useManualQueryWithAuth from "../../hooks/useManualQueryWithAuth";
+import useMutationWithAuth from "../../hooks/useMutationWithAuth";
+import useNotification from "../../hooks/useNotification";
+import useStateContext from "../../hooks/useStateContext";
 
 type Employee = EmployeesQuery["employees"][number];
 

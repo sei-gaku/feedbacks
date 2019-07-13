@@ -2,7 +2,7 @@ import { Typography } from "antd";
 import React from "react";
 import { useCurrentRoute } from "react-navi";
 
-import Layout from "../components/Layout";
+import Layout from "../../components/Layout";
 
 const Reviews: React.FC = () => {
   const route = useCurrentRoute();

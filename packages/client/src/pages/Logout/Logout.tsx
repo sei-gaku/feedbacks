@@ -1,8 +1,8 @@
 import React from "react";
 import { useNavigation } from "react-navi";
 
-import useLocalStorage from "../hooks/useLocalStorage";
-import useNotification from "../hooks/useNotification";
+import useLocalStorage from "../../hooks/useLocalStorage";
+import useNotification from "../../hooks/useNotification";
 
 const Logout: React.FC = () => {
   // TODO: Key should be in a config file

@@ -6,10 +6,10 @@ import { Router, View } from "react-navi";
 import { Provider as EmployeesProvider } from "./contexts/Employees";
 import { Provider as LoginProvider } from "./contexts/Login";
 import useLocalStorage from "./hooks/useLocalStorage";
-import Employees from "./pages/Employees";
-import Login from "./pages/Login";
-import Logout from "./pages/Logout";
-import Reviews from "./pages/Reviews";
+import Employees from "./pages/Employees/Employees";
+import Login from "./pages/Login/Login";
+import Logout from "./pages/Logout/Logout";
+import Reviews from "./pages/Reviews/Reviews";
 
 import "antd/dist/antd.css";
 import "./index.scss";

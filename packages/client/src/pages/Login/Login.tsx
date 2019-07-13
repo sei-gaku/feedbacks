@@ -4,14 +4,14 @@ import { loader } from "graphql.macro";
 import React from "react";
 import { useNavigation } from "react-navi";
 
-import Header from "../components/Header";
-import LoginForm from "../components/Login/Form";
-import LoginContext from "../contexts/Login";
-import { LoginMutation } from "../generated/graphql";
-import useNotification from "../hooks/useNotification";
-import useStateContext from "../hooks/useStateContext";
+import Header from "../../components/Header";
+import LoginForm from "../../components/Login/Form";
+import LoginContext from "../../contexts/Login";
+import { LoginMutation } from "../../generated/graphql";
+import useNotification from "../../hooks/useNotification";
+import useStateContext from "../../hooks/useStateContext";
 
-import useLocalStorage from "../hooks/useLocalStorage";
+import useLocalStorage from "../../hooks/useLocalStorage";
 import styles from "./Login.module.scss";
 
 const loginMutation = loader("./Login.graphql").loc!.source.body;
