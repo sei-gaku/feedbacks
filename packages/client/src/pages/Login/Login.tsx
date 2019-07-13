@@ -23,6 +23,7 @@ const Login: React.FC = () => {
   const navigation = useNavigation();
   const { setStorageValue: setTokenStorageValue } = useLocalStorage("token");
   const { setStorageValue: setRoleStorageValue } = useLocalStorage("role");
+  const { setStorageValue: setIdStorageValue } = useLocalStorage("id");
 
   React.useEffect(() => {
     dispatch({ type: "setLoading", payload: response.loading });
@@ -38,6 +39,7 @@ const Login: React.FC = () => {
       navigation.navigate("/");
       setTokenStorageValue(response.data.login.token);
       setRoleStorageValue(response.data.login.isAdmin ? "admin" : "employee");
+      setIdStorageValue(response.data.login.id.toString());
 
       return;
     }

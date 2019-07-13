@@ -1,5 +1,5 @@
 import { IsEmail, IsNotEmpty } from "class-validator";
-import { Field, ObjectType } from "type-graphql";
+import { Field, Int, ObjectType } from "type-graphql";
 
 @ObjectType()
 export class TokenModel {
@@ -11,6 +11,10 @@ export class TokenModel {
   @IsEmail()
   @IsNotEmpty()
   public email!: string;
+
+  @Field(_ => Int)
+  @IsNotEmpty()
+  public id!: number;
 
   @Field()
   public isAdmin!: boolean;

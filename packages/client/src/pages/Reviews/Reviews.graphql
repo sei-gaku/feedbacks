@@ -1,0 +1,21 @@
+query Reviews($id: Int!, $kind: ReviewKind!) {
+  employees {
+    id
+    firstName
+    lastName
+  }
+  reviews(id: $id, kind: $kind) {
+    id
+    content
+    writer {
+      id
+      firstName
+      lastName
+    }
+    target {
+      id
+      firstName
+      lastName
+    }
+  }
+}

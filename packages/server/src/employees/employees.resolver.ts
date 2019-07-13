@@ -1,4 +1,5 @@
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
+import { Int } from "type-graphql";
 
 import { Role } from "../auth/role.decorator";
 import { CreateEmployeeInput } from "./dto/create-employee.input";
@@ -19,7 +20,7 @@ export class EmployeesResolver {
   @Role("admin")
   @Query(_ => EmployeeModel, { nullable: true, name: "employee" })
   public async getEmployee(
-    @Args("id") id: number,
+    @Args({ name: "id", type: () => Int }) id: number,
   ): Promise<EmployeeModel | null> {
     return this.employeesService.findById(id);
   }
@@ -35,7 +36,7 @@ export class EmployeesResolver {
   @Role("admin")
   @Mutation(_ => Boolean)
   public async updateEmployee(
-    @Args("id") id: number,
+    @Args({ name: "id", type: () => Int }) id: number,
     @Args("employee") employee: UpdateEmployeeInput,
   ): Promise<boolean> {
     return this.employeesService.update(id, employee);
@@ -43,7 +44,9 @@ export class EmployeesResolver {
 
   @Role("admin")
   @Mutation(_ => Boolean)
-  public async deleteEmployee(@Args("id") id: number): Promise<boolean> {
+  public async deleteEmployee(
+    @Args({ name: "id", type: () => Int }) id: number,
+  ): Promise<boolean> {
     return this.employeesService.delete(id);
   }
 }

@@ -1,0 +1,3 @@
+mutation UpdateReview($id: Int!, $content: String!) {
+  updateReview(id: $id, review: { content: $content })
+}

@@ -81,3 +81,8 @@ Here is the stack:
 - It could be very nice to generate some directives in the GraphQL schema for both roles and validations
   , something like `@validate(maxLength: 64)) firstName` (but it's a whole project on its own)
 - Infinite scroll, filters, etc...
+- Clean the todos
+- Move the GraphQL queries in a dedicated folder
+- Use some more React Navi's features, like init fetch
+- Soft delete
+- Consider dropping the reviews related to deleted employees

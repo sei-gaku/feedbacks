@@ -9,7 +9,9 @@ import { Repository } from "typeorm";
 import { AuthService } from "../auth/auth.service";
 import { CurrentUser } from "../auth/current-user.interface";
 import { EmployeeEntity } from "../employees/employee.entity";
-import { ReviewInput } from "./dto/review.input";
+import { CreateReviewInput } from "./dto/create-review.input";
+import { ReviewKind } from "./dto/review-kind.input";
+import { UpdateReviewInput } from "./dto/update-review.input";
 import { ReviewEntity } from "./review.entity";
 
 @Injectable()
@@ -22,48 +24,28 @@ export class ReviewsService {
     private readonly authService: AuthService,
   ) {}
 
-  public async findAllWrittenByCurrentUser(): Promise<ReviewEntity[]> {
-    const currentUser = await this.currentUser();
-
-    return this.reviewRepository.find({
-      relations: ["target", "writer", "assignees"],
-      where: { writer: currentUser.id },
-    });
-  }
-
-  public async findAllAboutCurrentUser(): Promise<ReviewEntity[]> {
-    const currentUser = await this.currentUser();
-
-    return this.reviewRepository.find({
-      relations: ["target", "writer", "assignees"],
-      where: { target: currentUser.id },
-    });
-  }
-
-  public async findAllWrittenBy(id: number): Promise<ReviewEntity[]> {
+  public async findAll(id: number, kind: ReviewKind): Promise<ReviewEntity[]> {
     const currentUser = await this.currentUser();
 
     if (!currentUser.isAdmin) {
       throw new UnauthorizedException();
     }
 
-    return this.reviewRepository.find({
-      relations: ["target", "writer", "assignees"],
-      where: { writer: id },
-    });
-  }
+    switch (kind) {
+      case ReviewKind.ABOUT: {
+        return this.reviewRepository.find({
+          relations: ["target", "writer", "assignees"],
+          where: { target: id },
+        });
+      }
 
-  public async findAllAbout(id: number): Promise<ReviewEntity[]> {
-    const currentUser = await this.currentUser();
-
-    if (!currentUser.isAdmin) {
-      throw new UnauthorizedException();
+      case ReviewKind.WRITTEN_BY: {
+        return this.reviewRepository.find({
+          relations: ["target", "writer", "assignees"],
+          where: { writer: id },
+        });
+      }
     }
-
-    return this.reviewRepository.find({
-      relations: ["target", "writer", "assignees"],
-      where: { writer: id },
-    });
   }
 
   public async findById(id: number): Promise<ReviewEntity | null> {
@@ -74,7 +56,7 @@ export class ReviewsService {
     return review || null;
   }
 
-  public async create(review: ReviewInput): Promise<boolean> {
+  public async create(review: CreateReviewInput): Promise<boolean> {
     const currentUser = await this.authService.geCurrentUser();
 
     if (!currentUser) {
@@ -103,7 +85,7 @@ export class ReviewsService {
     return true;
   }
 
-  public async update(id: number, review: ReviewInput): Promise<boolean> {
+  public async update(id: number, review: UpdateReviewInput): Promise<boolean> {
     const currentReview = await this.reviewRepository.findOne(id);
 
     if (!currentReview) {
@@ -111,6 +93,7 @@ export class ReviewsService {
     }
 
     await this.reviewRepository.save({
+      ...currentReview,
       content: review.content,
     });
 

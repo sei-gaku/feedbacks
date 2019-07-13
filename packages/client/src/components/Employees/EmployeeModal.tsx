@@ -18,7 +18,9 @@ const EmployeeModal: React.FC<Props> = ({ onSubmit }) => {
 
   return (
     <Modal
-      title="Create employee"
+      title={`${
+        state.employeeModal.mode === "create" ? "Create" : "Edit"
+      } employee`}
       visible={true}
       onOk={() => onSubmit()}
       onCancel={() => dispatch({ type: "closeEmployeeModal" })}
@@ -33,7 +35,8 @@ const EmployeeModal: React.FC<Props> = ({ onSubmit }) => {
                 type: "setModalValue",
               })
             }
-            placeholder="Email"
+            placeholder="Email*"
+            required
             size="large"
             type="email"
             value={state.employeeModal.form.email}
@@ -51,7 +54,8 @@ const EmployeeModal: React.FC<Props> = ({ onSubmit }) => {
                   type: "setModalValue",
                 })
               }
-              placeholder="Password"
+              placeholder="Password*"
+              required
               size="large"
               type="password"
               value={state.employeeModal.form.password}
@@ -66,7 +70,8 @@ const EmployeeModal: React.FC<Props> = ({ onSubmit }) => {
                 type: "setModalValue",
               })
             }
-            placeholder="First Name"
+            placeholder="First Name*"
+            required
             size="large"
             value={state.employeeModal.form.firstName}
           />
@@ -79,7 +84,8 @@ const EmployeeModal: React.FC<Props> = ({ onSubmit }) => {
                 type: "setModalValue",
               })
             }
-            placeholder="Last Name"
+            placeholder="Last Name*"
+            required
             size="large"
             value={state.employeeModal.form.lastName}
           />
@@ -93,6 +99,7 @@ const EmployeeModal: React.FC<Props> = ({ onSubmit }) => {
               })
             }
             placeholder="Bio"
+            rows={5}
             value={state.employeeModal.form.bio || ""}
           />
         </Form.Item>
@@ -117,6 +124,7 @@ const EmployeeModal: React.FC<Props> = ({ onSubmit }) => {
             </Col>
           </Row>
         </Form.Item>
+        <Typography.Text>* required field</Typography.Text>
       </Form>
     </Modal>
   );

@@ -1,0 +1,3 @@
+mutation CreateReview($content: String!, $targetId: Int!) {
+  createReview(review: { content: $content, targetId: $targetId })
+}

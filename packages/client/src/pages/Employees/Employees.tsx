@@ -1,8 +1,8 @@
 import { Button, Dropdown, Icon, Menu, Row, Table, Typography } from "antd";
 import { loader } from "graphql.macro";
 import React from "react";
-
 import { Link } from "react-navi";
+
 import EmployeeModal from "../../components/Employees/EmployeeModal";
 import WarningModal from "../../components/Employees/WarningModal";
 import Layout from "../../components/Layout";
@@ -58,10 +58,10 @@ const Employees: React.FC = () => {
       </Menu.Item>
       <Menu.Divider />
       <Menu.Item>
-        <Link href="/reviews/written-by-me">Written reviews</Link>
+        <Link href={`/reviews/written-by/${employee.id}`}>Written reviews</Link>
       </Menu.Item>
       <Menu.Item>
-        <Link href="/reviews/about-me">About reviews</Link>
+        <Link href={`/reviews/about/${employee.id}`}>About reviews</Link>
       </Menu.Item>
       <Menu.Divider />
       <Menu.Item
@@ -90,7 +90,7 @@ const Employees: React.FC = () => {
     }
   }, [employeesFetched.error, notify]);
 
-  // Handle the error and succes on employee creation
+  // Handle the error and success on employee creation
   React.useEffect(() => {
     if (employeeCreated.error) {
       return notify("error", "An error occured");
@@ -104,7 +104,7 @@ const Employees: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [employeeCreated.error, employeeCreated.loading, employeeCreated.data]);
 
-  // Handle the error and succes on employee update
+  // Handle the error and success on employee update
   React.useEffect(() => {
     if (employeeUpdated.error) {
       return notify("error", "An error occured");
@@ -118,7 +118,7 @@ const Employees: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [employeeUpdated.error, employeeUpdated.loading, employeeUpdated.data]);
 
-  // Handle the error and succes on employee delete
+  // Handle the error and success on employee delete
   React.useEffect(() => {
     if (employeeDeleted.error) {
       return notify("error", "An error occured");

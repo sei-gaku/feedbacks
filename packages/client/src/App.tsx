@@ -5,6 +5,7 @@ import { Router, View } from "react-navi";
 
 import { Provider as EmployeesProvider } from "./contexts/Employees";
 import { Provider as LoginProvider } from "./contexts/Login";
+import { Provider as ReviewsProvider } from "./contexts/Reviews";
 import useLocalStorage from "./hooks/useLocalStorage";
 import Employees from "./pages/Employees/Employees";
 import Login from "./pages/Login/Login";
@@ -64,33 +65,88 @@ const routes = mount({
           ),
         }),
   ),
-  "/reviews/written-by-me": map((_, context) =>
-    !(context as any).token
+  // TODO: Refactor these routes
+  "/reviews/about-me": map((_, context: any) => {
+    const id = +context.id;
+
+    return isNaN(id) || !context.token
       ? redirect("/login")
       : route({
-          title: "Feedbacks - Reviews written by me",
-          view: <Reviews />,
-        }),
-  ),
-  "/reviews/about-me": map((_, context) =>
-    !(context as any).token
+          title: "Feedbacks - Reviews",
+          view: (
+            <ReviewsProvider>
+              <Reviews id={id} type="about" />
+            </ReviewsProvider>
+          ),
+        });
+  }),
+  "/reviews/written-by-me": map((_, context: any) => {
+    const id = +context.id;
+
+    return isNaN(id) || !context.token
       ? redirect("/login")
       : route({
-          title: "Feedbacks - Reviews about me",
-          view: <Reviews />,
-        }),
-  ),
+          title: "Feedbacks - Reviews",
+          view: (
+            <ReviewsProvider>
+              <Reviews id={id} type="written-by" />
+            </ReviewsProvider>
+          ),
+        });
+  }),
+  "/reviews/about/:id": map((req, context: any) => {
+    const id = +req.params.id;
+
+    if (isNaN(id)) {
+      return redirect("/");
+    }
+
+    return !context.token
+      ? redirect("/login")
+      : route({
+          title: "Feedbacks - Reviews",
+          view: (
+            <ReviewsProvider>
+              <Reviews id={id} type="about" />
+            </ReviewsProvider>
+          ),
+        });
+  }),
+  "/reviews/written-by/:id": map((req, context: any) => {
+    const id = +req.params.id;
+
+    if (isNaN(id)) {
+      return redirect("/");
+    }
+
+    return !context.token
+      ? redirect("/login")
+      : route({
+          title: "Feedbacks - Reviews",
+          view: (
+            <ReviewsProvider>
+              <Reviews id={id} type="written-by" />
+            </ReviewsProvider>
+          ),
+        });
+  }),
 });
 
 const App: React.FC = () => {
+  // TODO: Merge these values into one
   const { storageValue: storageTokenValue } = useLocalStorage("token");
   const { storageValue: storageRoleValue } = useLocalStorage("role");
+  const { storageValue: storageIdValue } = useLocalStorage("id");
 
   return (
     <ClientContext.Provider value={client}>
       <Router
         routes={routes}
-        context={{ token: storageTokenValue, role: storageRoleValue }}
+        context={{
+          id: storageIdValue,
+          role: storageRoleValue,
+          token: storageTokenValue,
+        }}
       >
         <View />
       </Router>
