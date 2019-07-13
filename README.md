@@ -5,7 +5,9 @@ The server's readme is [here](https://github.com/gaku-sei/feedbacks/blob/master/
 
 ### How to start
 
-`yarn && yarn start:dev` or `npm i && npm run start:dev` at the root level should be enough!
+:warning: _This project uses yarn workspaces, and will work only with [yarn](https://yarnpkg.com/lang/en/)._ :warning:
+
+`yarn && yarn start:dev` at the root level should be enough!
 
 You can use the following credentials to log in the first time: `email: admin@admin.com` and `password: admin`.
 
@@ -13,7 +15,7 @@ The website should be up and running on [http://localhost:3000](http://localhost
 
 #### Tests
 
-You can run some end to end tests with `yarn test:e2e` or `npm run test:e2e`. The server and the client should be running.
+You can run some end to end tests with `yarn test:e2e` The server and the client should be running.
 
 ### Assumptions
 
