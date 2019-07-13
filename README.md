@@ -9,7 +9,7 @@ The server's readme is [here](https://github.com/gaku-sei/feedbacks/blob/master/
 
 You can use the following credentials to log in the first time: `email: admin@admin.com` and `password: admin`.
 
-The website should be up and running on `http://localhost:3000`!
+The website should be up and running on [http://localhost:3000](http://localhost:3000)!
 
 #### Tests
 
