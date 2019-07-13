@@ -17,6 +17,7 @@ const LoginForm: React.FC<Props> = ({ onSubmit }) => {
     <Form onSubmit={onSubmit}>
       <Form.Item>
         <Input
+          data-e2e="email"
           onChange={event =>
             dispatch({
               payload: { key: "email", value: event.currentTarget.value },
@@ -32,6 +33,7 @@ const LoginForm: React.FC<Props> = ({ onSubmit }) => {
       </Form.Item>
       <Form.Item>
         <Input
+          data-e2e="password"
           onChange={event =>
             dispatch({
               payload: { key: "password", value: event.currentTarget.value },
@@ -47,6 +49,7 @@ const LoginForm: React.FC<Props> = ({ onSubmit }) => {
       </Form.Item>
       <Form.Item>
         <Button
+          data-e2e="login"
           loading={state.loading}
           type="primary"
           htmlType="submit"

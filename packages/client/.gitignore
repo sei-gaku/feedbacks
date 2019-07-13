@@ -21,5 +21,4 @@ yarn-debug.log*
 yarn-error.log*
 
 # GraphQL
-graphql.schema.json
 src/generated

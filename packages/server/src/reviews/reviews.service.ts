@@ -7,7 +7,6 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 
 import { AuthService } from "../auth/auth.service";
-import { CurrentUser } from "../auth/current-user.interface";
 import { EmployeeEntity } from "../employees/employee.entity";
 import { CreateReviewInput } from "./dto/create-review.input";
 import { ReviewKind } from "./dto/review-kind.input";
@@ -92,15 +91,5 @@ export class ReviewsService {
     });
 
     return true;
-  }
-
-  private async currentUser(): Promise<CurrentUser> {
-    const currentUser = await this.authService.geCurrentUser();
-
-    if (!currentUser) {
-      throw new UnauthorizedException();
-    }
-
-    return currentUser;
   }
 }
