@@ -5,7 +5,7 @@ import React from "react";
 import { useNavigation } from "react-navi";
 
 import Header from "../../components/Header";
-import LoginForm from "../../components/Login/Form";
+import LoginForm from "../../components/Login/LoginForm";
 import LoginContext from "../../contexts/Login";
 import { LoginMutation } from "../../generated/graphql";
 import useNotification from "../../hooks/useNotification";

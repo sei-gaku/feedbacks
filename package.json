@@ -5,7 +5,8 @@
     "packages/*"
   ],
   "scripts": {
-    "start:dev": "lerna run start:dev --stream"
+    "start:dev": "lerna run start:dev --stream",
+    "test:e2e": "lerna run test:e2e --stream"
   },
   "devDependencies": {
     "lerna": "^3.13.4"

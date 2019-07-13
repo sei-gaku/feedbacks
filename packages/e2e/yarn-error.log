@@ -1,0 +1,44 @@
+Arguments: 
+  /usr/local/bin/node /Users/japanck/.npm-global/bin/yarn test
+
+PATH: 
+  /Users/japanck/.opam/ocaml-variants.4.08.0+beta1/bin:/Users/japanck/.rbenv/shims:/Users/japanck/.dotnet/tools:/Users/japanck/.opam/default/bin:/Users/japanck/.local/bin:/Users/japanck/.cargo/bin:/Users/japanck/bin/protoc/bin:/Users/japanck/flutter/bin/cache/dart-sdk/bin:/Users/japanck/flutter/bin:/Users/japanck/bin/flutter/bin:/Users/japanck/bin:/Users/japanck/.npm-global/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/Users/japanck/.cargo/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin:/usr/local/share/dotnet:~/.dotnet/tools:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/Users/japanck/.rbenv/shims:/Users/japanck/.opam/ocaml-variants.4.08.0+beta1/bin:/Users/japanck/.dotnet/tools:/Users/japanck/.opam/default/bin:/Users/japanck/.local/bin:/Users/japanck/.cargo/bin:/Users/japanck/bin/protoc/bin:/Users/japanck/flutter/bin/cache/dart-sdk/bin:/Users/japanck/flutter/bin:/Users/japanck/bin/flutter/bin:/Users/japanck/bin:/Users/japanck/.npm-global/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/Users/japanck/go/bin:/Users/japanck/bin:/usr/local/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/Users/japanck/.cargo/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin:/usr/local/share/dotnet:~/.dotnet/tools:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/Users/japanck/.rbenv/shims:/Users/japanck/.opam/ocaml-variants.4.08.0+beta1/bin:/Users/japanck/.dotnet/tools:/Users/japanck/.opam/default/bin:/Users/japanck/.local/bin:/Users/japanck/.cargo/bin:/Users/japanck/bin/protoc/bin:/Users/japanck/flutter/bin/cache/dart-sdk/bin:/Users/japanck/flutter/bin:/Users/japanck/bin/flutter/bin:/Users/japanck/bin:/Users/japanck/.npm-global/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/Users/japanck/go/bin:/Users/japanck/go/bin
+
+Yarn version: 
+  1.16.0
+
+Node version: 
+  10.15.3
+
+Platform: 
+  darwin x64
+
+Trace: 
+  SyntaxError: /Users/japanck/own/feedback/packages/e2e/package.json: Unexpected token 
+   in JSON at position 161
+      at JSON.parse (<anonymous>)
+      at /Users/japanck/.npm-global/lib/node_modules/yarn/lib/cli.js:1625:59
+      at Generator.next (<anonymous>)
+      at step (/Users/japanck/.npm-global/lib/node_modules/yarn/lib/cli.js:304:30)
+      at /Users/japanck/.npm-global/lib/node_modules/yarn/lib/cli.js:315:13
+
+npm manifest: 
+  {
+    "name": "feedbacks-e2e",
+    "version": "0.1.0",
+    "main": "index.js",
+    "license": "MIT",
+    "scripts": {
+      "open": "cypress open",
+      "test": "cypress test
+    },
+    "devDependencies": {
+      "cypress": "^3.4.0"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
