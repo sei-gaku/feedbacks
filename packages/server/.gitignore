@@ -35,6 +35,3 @@ lerna-debug.log*
 
 # DB
 *.sqlite
-
-# GraphQL
-schema.graphql
