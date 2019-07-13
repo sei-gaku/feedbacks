@@ -86,3 +86,4 @@ Here is the stack:
 - Use some more React Navi's features, like init fetch
 - Soft delete
 - Consider dropping the reviews related to deleted employees
+- Smarter ErrorBoundary
