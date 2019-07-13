@@ -3,6 +3,12 @@
 Monorepo for the Feedbacks project, more information regarding the client can be found [here](https://github.com/gaku-sei/feedbacks/blob/master/packages/client/README.md).
 The server's readme is [here](https://github.com/gaku-sei/feedbacks/blob/master/packages/server/README.md).
 
+### How to start
+
+`yarn && yarn start:dev` or `npm i && npm run start:dev` at the root level should be enough!
+
+You can use the following credentials to log in the first time: `email: admin@admin.com` and `password: admin`.
+
 ### Assumptions
 
 The whole project is an mvp, with a minimal set of meaningful features.
@@ -74,3 +80,11 @@ Here is the stack:
 - Prepare for deployment: migrations for the bd, production build, etc...
 - It could be very nice to generate some directives in the GraphQL schema for both roles and validations
   , something like `@validate(maxLength: 64)) firstName` (but it's a whole project on its own)
+- Infinite scroll, filters, etc...
+- Clean the todos
+- Move the GraphQL queries in a dedicated folder
+- Use some more React Navi's features, like init fetch
+- Soft delete
+- Consider dropping the reviews related to deleted employees
+- Smarter ErrorBoundary
+- Pagination or Infinite scroll

@@ -5,13 +5,13 @@ import {
   Length,
   MaxLength,
 } from "class-validator";
-import { Field, ID, ObjectType } from "type-graphql";
+import { Field, Int, ObjectType } from "type-graphql";
 
 import { ReviewModel } from "../reviews/review.model";
 
 @ObjectType()
 export class EmployeeModel {
-  @Field(_ => ID)
+  @Field(_ => Int)
   public id!: number;
 
   @Field()
@@ -34,6 +34,9 @@ export class EmployeeModel {
   @IsOptional()
   @Length(0, 255)
   public bio?: string;
+
+  @Field()
+  public isAdmin!: boolean;
 
   @Field(_ => [ReviewModel], { nullable: true })
   public writtenReviews!: ReviewModel[];

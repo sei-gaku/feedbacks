@@ -1,7 +1,10 @@
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
+import { Int } from "type-graphql";
 
 import { Role } from "../auth/role.decorator";
-import { ReviewInput } from "./dto/review.input";
+import { CreateReviewInput } from "./dto/create-review.input";
+import { ReviewKind } from "./dto/review-kind.input";
+import { UpdateReviewInput } from "./dto/update-review.input";
 import { ReviewModel } from "./review.model";
 import { ReviewsService } from "./reviews.service";
 
@@ -11,38 +14,24 @@ export class ReviewsResolver {
   constructor(private readonly reviewsService: ReviewsService) {}
 
   @Query(_ => ReviewModel, { nullable: true, name: "review" })
-  public async getReview(@Args("id") id: number): Promise<ReviewModel | null> {
+  public async getReview(
+    @Args({ name: "id", type: () => Int }) id: number,
+  ): Promise<ReviewModel | null> {
     return this.reviewsService.findById(id);
   }
 
-  @Query(_ => [ReviewModel], { name: "reviewsIWrote" })
-  public async getReviewsWrittenByCurrentUser(): Promise<ReviewModel[]> {
-    return this.reviewsService.findAllWrittenByCurrentUser();
-  }
-
-  @Query(_ => [ReviewModel], { name: "reviewsAboutMe" })
-  public async getReviewsAboutCurrentUser(): Promise<ReviewModel[]> {
-    return this.reviewsService.findAllAboutCurrentUser();
-  }
-
-  @Role("admin")
-  @Query(_ => [ReviewModel], { name: "reviewsWrittenBy" })
-  public async getReviewsWrittenBy(
-    @Args("id") id: number,
+  @Query(_ => [ReviewModel], { name: "reviews" })
+  public async getReviews(
+    @Args({ name: "id", type: () => Int }) id: number,
+    @Args({ name: "kind", type: () => ReviewKind }) kind: ReviewKind,
   ): Promise<ReviewModel[]> {
-    return this.reviewsService.findAllWrittenBy(id);
-  }
-
-  @Role("admin")
-  @Query(_ => [ReviewModel], { name: "reviewsAbout" })
-  public async getReviewsAbout(@Args("id") id: number): Promise<ReviewModel[]> {
-    return this.reviewsService.findAllAbout(id);
+    return this.reviewsService.findAll(id, kind);
   }
 
   @Role("admin")
   @Mutation(_ => Boolean)
   public async createReview(
-    @Args("review") review: ReviewInput,
+    @Args("review") review: CreateReviewInput,
   ): Promise<boolean> {
     return this.reviewsService.create(review);
   }
@@ -50,8 +39,8 @@ export class ReviewsResolver {
   @Role("admin")
   @Mutation(_ => Boolean)
   public async updateReview(
-    @Args("id") id: number,
-    @Args("review") review: ReviewInput,
+    @Args({ name: "id", type: () => Int }) id: number,
+    @Args("review") review: UpdateReviewInput,
   ): Promise<boolean> {
     return this.reviewsService.update(id, review);
   }

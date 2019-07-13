@@ -3,7 +3,8 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 
 import { BCryptService } from "../bcrypt/bcrypt.service";
-import { EmployeeInput } from "./dto/employee.input";
+import { CreateEmployeeInput } from "./dto/create-employee.input";
+import { UpdateEmployeeInput } from "./dto/update-employee.input";
 import { EmployeeEntity } from "./employee.entity";
 
 @Injectable()
@@ -28,7 +29,7 @@ export class EmployeesService {
     return employee || null;
   }
 
-  public async create(employee: EmployeeInput): Promise<boolean> {
+  public async create(employee: CreateEmployeeInput): Promise<boolean> {
     await this.employeeRepository.save({
       bio: employee.bio,
       email: employee.email,
@@ -41,7 +42,10 @@ export class EmployeesService {
     return true;
   }
 
-  public async update(id: number, employee: EmployeeInput): Promise<boolean> {
+  public async update(
+    id: number,
+    employee: UpdateEmployeeInput,
+  ): Promise<boolean> {
     const currentEmployee = await this.employeeRepository.findOne(id);
 
     if (!currentEmployee) {
@@ -50,12 +54,10 @@ export class EmployeesService {
 
     await this.employeeRepository.save({
       bio: employee.bio,
-      email: employee.email,
       firstName: employee.firstName,
       id,
       isAdmin: employee.isAdmin,
       lastName: employee.lastName,
-      password: await this.bcryptService.encrypt(employee.password),
     });
 
     return true;
